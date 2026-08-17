@@ -108,7 +108,7 @@ STAGE_MONITOR_SOCK="$WORKDIR/stage.sock"
 nudge_boot_prompt "$STAGE_MONITOR_SOCK"
 python3 "$SCRIPT_DIR/inject-drivers.py" "$STAGE_MONITOR_SOCK" &
 qemu-system-x86_64 \
-  -name easywin-stage-drivers \
+  -name easywin-drivers \
   -machine q35 -accel kvm -cpu host \
   -smp "$SMP" -m "$RAM" \
   -drive file="$OVMF_CODE",if=pflash,format=raw,readonly=on \
