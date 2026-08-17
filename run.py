@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-Boot a disk made by setup.py.
+Boot a disk made by install.py.
 
 usage: ./run.py <disk.qcow2> [--gpu]
 '''
@@ -11,7 +11,7 @@ import os
 import shutil
 import subprocess
 
-from setup import die, find_ovmf, log, need_cmd, need_file, need_kvm, qemu_base, warn
+from install import die, find_ovmf, log, need_cmd, need_file, need_kvm, qemu_base, warn
 
 
 def qemu_supports (args, wanted):
@@ -51,7 +51,7 @@ def gpu_args (ram, hostmem):
 
 
 def main ():
-  parser = argparse.ArgumentParser(description='boot a disk made by setup.py')
+  parser = argparse.ArgumentParser(description='boot a disk made by install.py')
   parser.add_argument('disk', help='qcow2 disk to boot')
   parser.add_argument('--gpu', action='store_true', default=os.environ.get('GPU') == '1',
                       help='experimental virtio-gpu/venus acceleration')
@@ -62,7 +62,7 @@ def main ():
   args = parser.parse_args()
 
   need_cmd('qemu-system-x86_64', "install qemu (e.g. 'pacman -S qemu-desktop' / 'apt install qemu-system-x86')")
-  need_file(args.disk, 'run setup.py first to create it')
+  need_file(args.disk, 'run install.py first to create it')
   need_kvm()
 
   ovmf_code, ovmf_vars_template = find_ovmf()
@@ -73,7 +73,7 @@ def main ():
   display_args = gpu_args(args.ram, args.hostmem) if args.gpu else ['-vga', 'std']
 
   log(f'starting {args.disk}' + (' (GPU acceleration enabled)' if args.gpu else ''))
-  # virtio-blk/virtio-net for real throughput; setup.py stages their drivers
+  # virtio-blk/virtio-net for real throughput; install.py stages their drivers
   # automatically (re-run it on a fresh disk if this hangs/BSODs on boot).
   cmd = qemu_base('easywin', ovmf_code, vars_file, args.ram, args.smp) + [
     '-drive', f'file={args.disk},if=virtio,format=qcow2',

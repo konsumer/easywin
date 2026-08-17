@@ -4,7 +4,7 @@ Create a qcow2 disk and install Windows 11 onto it, fully unattended, then
 inject virtio-blk/virtio-net drivers into the installed image so run.py gets
 real disk/network throughput.
 
-usage: ./setup.py <source.iso> <disk.qcow2> [size]
+usage: ./install.py <source.iso> <disk.qcow2> [size]
 
 run.py imports the small helpers at the top of this file, so those two are
 the only scripts here.
@@ -352,7 +352,7 @@ def main ():
   finally:
     shutil.rmtree(workdir, ignore_errors=True)
 
-  log(f'setup finished - your disk is ready: {args.disk} (run.py will use it)')
+  log(f'install finished - your disk is ready: {args.disk} (run.py will use it)')
 
 
 if __name__ == '__main__':
