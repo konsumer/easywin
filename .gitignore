@@ -3,3 +3,4 @@
 *.iso
 *.vars.fd
 .claude/
+__pycache__/

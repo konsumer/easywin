@@ -1,0 +1,7 @@
+# StandardJS-ish layout, adapted to python
+indent-width = 2
+line-length = 120
+
+[format]
+quote-style = "single"
+indent-style = "space"
