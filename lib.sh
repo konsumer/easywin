@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shared helpers - sourced by setup.sh, run.sh and run_dxvk.sh
+# shared helpers - sourced by setup.sh and run.sh
 # not meant to be run directly
 
 c_red=$'\033[0;31m'; c_green=$'\033[0;32m'; c_yellow=$'\033[1;33m'; c_reset=$'\033[0m'

@@ -19,12 +19,12 @@ Once Windows is installed, the script automatically reboots into WinPE a second 
 ./run.sh win11.qcow2
 ```
 
-Stable, everyday use: virtio-blk/virtio-net (after staging above), plain framebuffer display, no GPU acceleration.
+Everyday use: virtio-blk/virtio-net (staged by `setup.sh` above), plain framebuffer display, no GPU acceleration.
 
 ## run with GPU acceleration (experimental)
 
 ```sh
-./run_dxvk.sh win11.qcow2
+GPU=1 ./run.sh win11.qcow2
 ```
 
-This enables virtio-gpu with [venus](https://docs.mesa3d.org/drivers/venus.html) (Vulkan passthrough to the host GPU, no PCI passthrough needed), for use with [DXVK](https://github.com/doitsujin/dxvk) inside the guest. It depends on an **unofficial, unstable, build-it-yourself** Windows driver ([arehnman/kvm-guest-drivers-windows](https://github.com/arehnman/kvm-guest-drivers-windows), forked from an abandoned upstream PR) - its own README says it can crash or hang the guest. There is no installer for it; you build and test-sign it yourself inside the guest. Once that driver is in and DXVK is dropped into a game/app's folder, it should use the host GPU. Use `run.sh` instead for anything that needs to be reliable.
+This swaps the display for virtio-gpu with [venus](https://docs.mesa3d.org/drivers/venus.html) (Vulkan passthrough to the host GPU, no PCI passthrough needed). It boots fine with no extra guest driver (Windows just falls back to a generic display), so it's safe to leave on. Real acceleration needs an **unofficial, unstable, build-it-yourself** Windows driver ([arehnman/kvm-guest-drivers-windows](https://github.com/arehnman/kvm-guest-drivers-windows), forked from an abandoned upstream PR) - its own README says it can crash or hang the guest once it's doing real rendering work. There is no installer for it; you build and test-sign it yourself inside the guest. Once that driver is in and [DXVK](https://github.com/doitsujin/dxvk) is dropped into a game/app's folder, it should use the host GPU. Leave `GPU` unset for anything that needs to be reliable.
